@@ -1,4 +1,4 @@
-# Halfigs
+# F-fuse
 
 [![NPM version](https://img.shields.io/npm/v/f-fuse.svg)](https://www.npmjs.com/package/f-fuse)
 
