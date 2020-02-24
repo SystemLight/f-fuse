@@ -4,15 +4,20 @@ interface IWhen {
 interface IDef {
     (...args: any[]): any;
 }
+interface IFuseOptions {
+    manual?: boolean;
+    memory?: boolean;
+}
 export declare class Fuse {
-    manual?: boolean | undefined;
+    opt: IFuseOptions;
     private isBroken;
     private when;
-    constructor(manual?: boolean | undefined);
+    private result;
+    constructor(opt?: IFuseOptions);
     weld(): void;
     cut(): void;
     __when(...args: any[]): boolean;
     on(callback: IWhen): void;
-    def(func: IDef): (...args: any[]) => any;
+    def(func: IDef): any;
 }
 export {};

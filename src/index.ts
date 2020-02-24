@@ -6,16 +6,21 @@ interface IDef {
     (...args: any[]): any
 }
 
+interface IFuseOptions {
+    manual?: boolean,
+    memory?: boolean
+}
+
 export class Fuse {
 
     private isBroken: boolean;
     private when: IWhen;
+    private result: any;
 
     constructor(
-        public manual?: boolean
+        public opt: IFuseOptions = {}
     ) {
-        this.manual = manual || false;
-        this.isBroken = this.manual;
+        this.isBroken = !!this.opt.manual;
         this.when = this.__when;
     }
 
@@ -35,19 +40,16 @@ export class Fuse {
         this.when = callback;
     }
 
-    def(func: IDef) {
-        let that = this;
-        return function (...args: any[]) {
-            let result;
-            if (!that.isBroken) {
-                if (!that.manual && that.when(...args)) {
-                    that.isBroken = true;
-                    result = func(...args);
-                } else if (that.manual) {
-                    result = func(...args);
-                }
+    def(func: IDef): any {
+        let {manual, memory} = this.opt;
+        return (...args: any[]) => {
+            if (this.isBroken && memory) {
+                return this.result;
+            } else if (!this.isBroken && this.when(...args)) {
+                this.result = func(...args);
+                !manual && this.cut();
+                return this.result;
             }
-            return result;
-        }
+        };
     }
 }
