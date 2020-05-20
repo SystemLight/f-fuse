@@ -16,6 +16,8 @@ export class Fuse {
     private isBroken: boolean;
     private when: IWhen;
     private result: any;
+    public closure_arg: any;
+
 
     constructor(
         public opt: IFuseOptions = {}
@@ -37,7 +39,14 @@ export class Fuse {
     }
 
     on(callback: IWhen): void {
-        this.when = callback;
+        this.when = callback.bind(this);
+    }
+
+    callComplete() {
+    }
+
+    closure(...args: any[]): void {
+        this.closure_arg = args;
     }
 
     def(func: IDef): any {
@@ -48,6 +57,9 @@ export class Fuse {
             } else if (!this.isBroken && this.when(...args)) {
                 this.result = func(...args);
                 !manual && this.cut();
+                this.callComplete();
+                this.callComplete = () => {
+                };
                 return this.result;
             }
         };

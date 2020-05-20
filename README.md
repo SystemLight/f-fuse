@@ -115,19 +115,44 @@ f3.on(function (item) {
 });
 ```
 
+```
+传递闭包参数，closure方法传入的值可以通过closure_arg属性获取，之后可以根据该值进行判定
+如下面的函数当且仅当传入索引值为3时才执行
+
+let f = new Fuse({manual: true});
+f.weld();
+f.on(function (this: Fuse, item: number) {
+    return this.closure_arg[0] === 3;
+});
+
+
+let print_info: (item: number) => number = f.def(function (item) {
+    console.log("函数被调用: ", item);
+    return item;
+});
+
+
+[1, 2, 3, 4, 5, 2, 7].forEach((value, index) => {
+    f.closure(index);
+    let result = print_info(value);
+    console.log("调用结果", result);
+});
+```
+
 # Note
 
 默认情况：函数执行一次后自动被cut，导致之后不会被执行，且调用函数无任何返回内容  
 如不定义on方法，fuse定义的函数将会在被执行第一次即为条件满足被熔断
 
 - new Fuse(options)
-    - manual:手动模式[on方法无效化，除非手动调用cut()方法，否则表现形式和正常函数一致]
+    - manual:手动模式[默认是熔断的，需要调用weld方法，手动模式下函数不会触发一次后就自动熔断，除非手动调用cut方法]
     - memory:启用记忆[开启记忆功能，函数仍然不会重复被执行，但会始终返回函数被cut时的返回值]
     
 - weld() : 调用该方法，让fuse定义的函数可以正常被执行
 - cut() : 调用该方法，让fuse定义的函数无法被执行
-- on(callback) : 当回调函数返回true时，函数被执行，自动模式下有效,回调函数接受定义函数的所有参数
+- on(callback) : 当回调函数返回true时，函数被执行，不声明默认情况下全部情况返回true
 - def(func) : 使用def定义特殊的函数，返回值为函数本身
+- closure() : 闭包函数允许你传递一些值，这些值附着在closure_arg属性上，当使用on注册when回调函数时，可以通过this.closure_arg获取
 
 # Resources
 
