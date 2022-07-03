@@ -1,9 +1,9 @@
-# F-fuse
+# f-fuse
 
 [![NPM version](https://img.shields.io/npm/v/f-fuse.svg)](https://www.npmjs.com/package/f-fuse)
 
 Defining functions to be executed during special periods  
-NPM page: https://www.npmjs.com/package/f-fuse  
+NPM page: https://www.npmjs.com/package/f-fuse
 
 # Installation
 
@@ -145,9 +145,9 @@ let print_info: (item: number) => number = f.def(function (item) {
 如不定义on方法，fuse定义的函数将会在被执行第一次即为条件满足被熔断
 
 - new Fuse(options)
-    - manual:手动模式[默认是熔断的，需要调用weld方法，手动模式下函数不会触发一次后就自动熔断，除非手动调用cut方法]
-    - memory:启用记忆[开启记忆功能，函数仍然不会重复被执行，但会始终返回函数被cut时的返回值]
-    
+  - manual:手动模式[默认是熔断的，需要调用weld方法，手动模式下函数不会触发一次后就自动熔断，除非手动调用cut方法]
+  - memory:启用记忆[开启记忆功能，函数仍然不会重复被执行，但会始终返回函数被cut时的返回值]
+
 - weld() : 调用该方法，让fuse定义的函数可以正常被执行
 - cut() : 调用该方法，让fuse定义的函数无法被执行
 - on(callback) : 当回调函数返回true时，函数被执行，不声明默认情况下全部情况返回true
