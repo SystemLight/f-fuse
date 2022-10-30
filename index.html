@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<body>
+
+<script src="dist/main.bundle.js"></script>
+<script>
+  let f = new Fuse()
+
+  let print_info = f.def(function (item) {
+    console.log('函数被调用: ', item)
+    return item
+  });
+
+  f.on(function (item) {
+    return item > 3
+  });
+
+  [1, 2, 3, 4, 5, 6, 7].forEach(value => {
+    let result = print_info(value)
+    console.log('返回内容', result)
+  });
+</script>
+</body>
+</html>

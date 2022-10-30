@@ -16,7 +16,7 @@ npm install f-fuse --save
 ```
 // typescript: 
 
-import {Fuse} from "../src";
+import Fuse from "f-fuse";
 
 
 let f = new Fuse();
@@ -48,7 +48,7 @@ export default {}
 ```
 // javascript: 
 
-import {Fuse} from "../src";
+import Fuse from "f-fuse";
 
 
 // 示例1： 传入参数大于3时，被执行一次之后不再执行且无返回值
